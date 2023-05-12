@@ -6,13 +6,13 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:48:51 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/05/12 14:02:06 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/05/12 17:27:40 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(char *str) // ---------- not original libft -----------
+static size_t	ft_strlen(char *str) // ---------- not original libft -----------
 {
 	size_t	i;
 

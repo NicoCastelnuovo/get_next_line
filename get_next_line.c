@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:47:26 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/05/12 15:06:55 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/05/12 17:25:19 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,49 +44,48 @@ static char	*split(char **line)
 	int		left_len;
 	int		right_len;
 
-	// printf("line(3) [%p]\n", *line);
 	left_len = get_left_len(*line);
 	left = ft_substr(*line, 0, left_len);
-	// printf("left [%p]\n", left);
 	right_len = get_right_len(*line, left_len);
 	if (right_len == 0)
 	{
-		// // printf("RIGHT_LEN == 0 - *line [%s] - left [%s]\n", *line, left);
 		temp = NULL;
 		free(*line);
 		*line = NULL;
-		// printf("line(4) [%p]\n", left);
 	}
 	else
 	{
 		temp = *line;
-		// printf("temp(5) [%p]\n", left);
 		*line = ft_substr(*line, left_len, right_len);
 		free(temp);
-		// printf("line(5) [%p]\n", left);
 	}
 	return (left);
 }
-// - 6 = OK
 
-char	*init_buffer(char	**buff)
+char	*init_buffer(char **buff, int fd)
 {
-	// char	*buff;
-
-	// if (fd || fd >= 0)
-	// {
-	// 	// check fd
-	// }
-	if (BUFFER_SIZE > 0)
+	if (fd >= 0)
 	{
-		*buff = malloc ((BUFFER_SIZE + 1) * sizeof(char));
-		// printf("Addresses:\n");
-		// printf("buff [%p]\n", buff);
-		if (!*buff)
-			return (NULL);
-		return (*buff);
+		if (BUFFER_SIZE > 0)
+		{
+			*buff = malloc ((BUFFER_SIZE + 1) * sizeof(char));
+			if (!*buff)
+				return (NULL);
+			return (*buff);
+		}
 	}
 	return (NULL);
+}
+static char	*stop_to_read(char **line, char **buff, int	n_read)
+{
+	if (*line)
+	{
+		if (n_read == -1)
+			return (free(*buff), free(*line), *line = NULL, NULL);
+		if (n_read == 0)
+			return (free(*buff), split(line));
+	}
+	return (free(*buff), NULL);
 }
 
 char	*get_next_line(int fd)
@@ -95,7 +94,7 @@ char	*get_next_line(int fd)
 	char		*buff;
 	int			n_read;
 
-	buff = init_buffer(&buff);
+	buff = init_buffer(&buff, fd);
 	if (!buff)
 		return (NULL);
 	n_read = 1;
@@ -103,30 +102,16 @@ char	*get_next_line(int fd)
 	{
 		n_read = read(fd, buff, BUFFER_SIZE);
 		if (n_read == -1)
-		{
-			if (line)
-				return (free(buff), buff = NULL, free(line), line = NULL, NULL);
-			return (free(buff), buff = NULL);
-		}
+			return (stop_to_read(&line, &buff, n_read));
 		buff[n_read] = '\0';
-		if (n_read > 0) // && n_read == BUFFER_SIZE ???
+		if (n_read == 0)
+			return (stop_to_read(&line, &buff, n_read));
+		if (n_read > 0)
 		{
 			line = ft_strjoin(line, buff);
-			// printf("line(1) [%p]\n", line);
 			if (!line)
 				return (free(buff), buff = NULL, NULL);
-		}
-		else // n_read == 0 || n_read == -1
-		{
-			if (line)
-			{
-				// printf("line(2) [%p]\n", line);
-				return (free(buff), buff = NULL, split(&line));
-			}
-			else
-				return (free(buff), buff = NULL, NULL); // --------- free(line), line = NULL ???? ---- it should already be NULL
 		}
 	}
 	return (free(buff), buff = NULL, split(&line));
 }
-// - 4
