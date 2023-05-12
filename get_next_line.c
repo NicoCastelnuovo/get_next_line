@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:47:26 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/05/12 12:29:32 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/05/12 12:36:15 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ char	*get_next_line(int fd)
 			line = ft_strjoin(&line, buff);
 			// printf("line(1) [%p]\n", line);
 			if (!line)
-				return (free(buff), buff = NULL, free(line), line = NULL, NULL);
+				return (free(buff), buff = NULL, NULL);
 		}
 		else // n_read == 0 || n_read == -1
 		{
