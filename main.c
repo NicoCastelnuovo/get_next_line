@@ -24,15 +24,31 @@ int main ()
 	// printf("• 5) [buff=%d]:  --> %s\n_______________", BUFFER_SIZE, get_next_line(fd));
 	// printf("• 6) [buff=%d]:  --> %s\n_______________", BUFFER_SIZE, get_next_line(fd));
 	// printf("• 7) [buff=%d]:  --> %s\n_______________", BUFFER_SIZE, get_next_line(fd));
-	printf("\n• 1) [buff=%d]:  --> %s", BUFFER_SIZE, get_next_line(fd));
-	printf("• 2) [buff=%d]:  --> %s", BUFFER_SIZE, get_next_line(fd));
-	printf("• 3) [buff=%d]:  --> %s", BUFFER_SIZE, get_next_line(fd));
-	printf("• 4) [buff=%d]:  --> %s", BUFFER_SIZE, get_next_line(fd));
-	printf("• 5) [buff=%d]:  --> %s", BUFFER_SIZE, get_next_line(fd));
-	printf("• 6) [buff=%d]:  --> %s", BUFFER_SIZE, get_next_line(fd));
-	printf("• 7) [buff=%d]:  --> %s", BUFFER_SIZE, get_next_line(fd));
 
-	// system("leaks a.out");
+	// printf("\n• 1) [buff=%d]:  --> %s", BUFFER_SIZE, get_next_line(fd));
+	// printf("• 2) [buff=%d]:  --> %s", BUFFER_SIZE, get_next_line(fd));
+	// printf("• 3) [buff=%d]:  --> %s", BUFFER_SIZE, get_next_line(fd));
+	// printf("• 4) [buff=%d]:  --> %s", BUFFER_SIZE, get_next_line(fd));
+	// printf("• 5) [buff=%d]:  --> %s", BUFFER_SIZE, get_next_line(fd));
+	// printf("• 6) [buff=%d]:  --> %s", BUFFER_SIZE, get_next_line(fd));
+	// printf("• 7) [buff=%d]:  --> %s", BUFFER_SIZE, get_next_line(fd));
+
+	get_next_line(fd);
+	printf("----------------\n");
+	get_next_line(fd);
+	printf("----------------\n");
+	get_next_line(fd);
+	printf("----------------\n");
+	get_next_line(fd);
+	printf("----------------\n");
+	get_next_line(fd);
+	printf("----------------\n");
+	get_next_line(fd);
+	printf("----------------\n");
+	get_next_line(fd);
+	printf("----------------\n");
+
+	system("leaks a.out");
 
 	close(fd);
 

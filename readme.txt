@@ -1,2 +1,4 @@
 aAAaa
-*
+bbbbbbb
+cc
+ddd

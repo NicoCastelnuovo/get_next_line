@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:48:51 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/05/12 11:38:18 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/05/12 12:20:45 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ size_t	ft_strlen(char *str) // ---------- not original libft -----------
 	return (i);
 }
 
-char	*ft_strchr(const char *str, int c) // ---------- not original libft -----------
+char	*ft_strchr(char *str, int c) // ---------- not original libft -----------
 {
 	char	*p;
 	int		i;
@@ -55,7 +55,7 @@ void	*ft_memset(void *str, int c, size_t n)
 	return (str);
 }
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+void	*ft_memcpy(void *dest, void *src, size_t n)
 {
 	size_t	i;
 
@@ -84,33 +84,18 @@ void	*ft_calloc(size_t len, size_t n_bits)
 	return (p);
 }
 
-char	*ft_strdup(char *str)
-{
-	char	*p;
-	size_t	len;
-
-	len = ft_strlen(str);
-	if (len == 0) // added to return in case an empty string is passed
-		return (NULL);
-	p = malloc (len + 1);
-	if (!p)
-		return (NULL);
-	ft_memcpy(p, str, len);
-	p[len] = '\0';
-	return (p);
-}
-char	*ft_substr(char *s, unsigned int start, size_t n)
+char	*ft_substr(char *s, unsigned int start, size_t n) // ---------- not original libft -----------
 {
 	char	*p;
 	size_t	i;
 
-	if (!s)
-		return (NULL); // ?????
-	if (start >= ft_strlen(s))
-		return (ft_strdup("")); // change this to something else --- NULL ? --- but never happens
+	// printf("s substr (1) [%p]\n", s);
+	if (!s) // ---------- not original libft -----------
+		return (NULL);
 	if (ft_strlen(s + start) < n)
 		n = ft_strlen(s + start);
 	p = malloc ((n + 1) * sizeof(char));
+	// printf("p substr (2) [%p]\n", p);
 	if (!p)
 		return (NULL);
 	i = 0;
@@ -121,27 +106,26 @@ char	*ft_substr(char *s, unsigned int start, size_t n)
 		i++;
 	}
 	p[i] = '\0';
-	return (p); // ---- free(s) ???
+	return (p);
 }
 
-char	*ft_strjoin(char *line, char *buff)
+char	*ft_strjoin(char **line, char *buff)
 {
 	int		line_len;
 	int		buff_len;
 	char	*new_line;
 
-	line_len = ft_strlen(line);
+	// printf("*line join (1) [%p]\n", *line);
+	line_len = ft_strlen(*line);
 	buff_len = ft_strlen(buff);
 	new_line = malloc ((line_len + buff_len + 1) * sizeof(char));
+	// printf("new_line join (1) [%p]\n", *line);
 	if (!new_line)
 		return (NULL);
-	ft_memcpy(new_line, line, line_len);
+	ft_memcpy(new_line, *line, line_len);
 	ft_memcpy(new_line + line_len, buff, buff_len);
 	new_line[line_len + buff_len] = '\0';
-
-	// free(*line); // --- REMEMBER free()
-	// *line = NULL;
-	// free(new_line); // --- REMEMBER free()
-
+	free(*line);
+	line = NULL;
 	return (new_line);
 }
