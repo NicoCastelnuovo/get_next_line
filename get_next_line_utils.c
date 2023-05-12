@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:48:51 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/05/12 12:36:22 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/05/12 14:02:06 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,23 +109,23 @@ char	*ft_substr(char *s, unsigned int start, size_t n) // ---------- not origina
 	return (p);
 }
 
-char	*ft_strjoin(char **line, char *buff)
+char	*ft_strjoin(char *line, char *buff) // ------ change to ** to assign to NULL
 {
 	int		line_len;
 	int		buff_len;
 	char	*new_line;
 
 	// printf("*line join (1) [%p]\n", *line);
-	line_len = ft_strlen(*line);
+	line_len = ft_strlen(line);
 	buff_len = ft_strlen(buff);
 	new_line = malloc ((line_len + buff_len + 1) * sizeof(char));
 	// printf("new_line join (1) [%p]\n", *line);
 	if (!new_line)
 		return (NULL);
-	ft_memcpy(new_line, *line, line_len);
+	ft_memcpy(new_line, line, line_len);
 	ft_memcpy(new_line + line_len, buff, buff_len);
 	new_line[line_len + buff_len] = '\0';
-	free(*line);
-	line = NULL;
+	free(line);
+	// line = NULL; ---------- ????? or *line
 	return (new_line);
 }
