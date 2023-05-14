@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:47:26 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/05/14 17:37:31 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/05/14 17:51:37 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,8 @@ char	*get_next_line(int fd)
 		{
 			line = ft_strjoin_mod(line, buff);
 			if (!line)
-				return (free(buff), buff = NULL, NULL);
+				return (free(buff), NULL);
 		}
 	}
-	return (free(buff), buff = NULL, split(&line));
+	return (free(buff), split(&line));
 }
