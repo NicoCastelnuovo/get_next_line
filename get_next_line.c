@@ -6,34 +6,32 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:47:26 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/05/14 14:42:15 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/05/14 17:37:31 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static int	get_right_len(char *line, int left_len)
+static int	get_substr_len(char *line, int start)
 {
 	int	i;
 
 	i = 0;
-	while (line[left_len])
+	if (!start)
 	{
-		left_len++;
+		while (line[i] && line[i] != '\n')
 		i++;
+		if (line[i] == '\n')
+			i++;
 	}
-	return (i);
-}
-
-static int	get_left_len(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i] && line[i] != '\n')
-		i++;
-	if (line[i] == '\n')
-		i++;
+	else
+	{
+		while (line[start])
+		{
+			start++;
+			i++;
+		}
+	}
 	return (i);
 }
 
@@ -44,9 +42,9 @@ static char	*split(char **line)
 	int		left_len;
 	int		right_len;
 
-	left_len = get_left_len(*line);
+	left_len = get_substr_len(*line, 0);
 	left = ft_substr_mod(*line, 0, left_len);
-	right_len = get_right_len(*line, left_len);
+	right_len = get_substr_len(*line, left_len);
 	if (right_len == 0)
 	{
 		temp = NULL;

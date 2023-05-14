@@ -6,13 +6,13 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:48:51 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/05/14 14:53:02 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/05/14 16:04:53 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-size_t	ft_strlen_mod(char *str)
+static size_t	ft_strlen_mod(char *str)
 {
 	size_t	i;
 
@@ -51,23 +51,20 @@ void	*ft_memcpy_mod(void *dest, void *src, size_t n)
 		return (NULL);
 	while (i < n)
 	{
-		*((char *) dest + i) = *((char *) src + i);
+		*((char *)dest + i) = *((char *)src + i);
 		i++;
 	}
 	return (dest);
 }
 
-char	*ft_substr(char *s, unsigned int start, size_t n)
+char	*ft_substr_mod(char *s, unsigned int start, size_t n)
 {
 	char	*p;
 	size_t	i;
 
-	// if (!s) // ---------- not original libft -----------
-	// 	return (NULL);
 	if (ft_strlen_mod(s + start) < n)
 		n = ft_strlen_mod(s + start);
 	p = malloc ((n + 1) * sizeof(char));
-	// printf("p substr (2) [%p]\n", p);
 	if (!p)
 		return (NULL);
 	i = 0;
@@ -92,8 +89,8 @@ char	*ft_strjoin_mod(char *line, char *buff)
 	new_line = malloc ((line_len + buff_len + 1) * sizeof(char));
 	if (!new_line)
 		return (NULL);
-	ft_memcpy(new_line, line, line_len);
-	ft_memcpy(new_line + line_len, buff, buff_len);
+	ft_memcpy_mod(new_line, line, line_len);
+	ft_memcpy_mod(new_line + line_len, buff, buff_len);
 	new_line[line_len + buff_len] = '\0';
 	free(line);
 	return (new_line);

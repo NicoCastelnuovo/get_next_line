@@ -6,34 +6,32 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:47:26 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/05/14 14:54:48 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/05/14 16:58:41 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-static int	get_right_len(char *line, int left_len)
+static int	get_substr_len(char *line, int start)
 {
 	int	i;
 
 	i = 0;
-	while (line[left_len])
+	if (!start)
 	{
-		left_len++;
+		while (line[i] && line[i] != '\n')
 		i++;
+		if (line[i] == '\n')
+			i++;
 	}
-	return (i);
-}
-
-static int	get_left_len(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i] && line[i] != '\n')
-		i++;
-	if (line[i] == '\n')
-		i++;
+	else
+	{
+		while (line[start])
+		{
+			start++;
+			i++;
+		}
+	}
 	return (i);
 }
 
@@ -44,9 +42,9 @@ static char	*split(char **line)
 	int		left_len;
 	int		right_len;
 
-	left_len = get_left_len(*line);
-	left = ft_substr(*line, 0, left_len);
-	right_len = get_right_len(*line, left_len);
+	left_len = get_substr_len(*line, 0);
+	left = ft_substr_mod(*line, 0, left_len);
+	right_len = get_substr_len(*line, left_len);
 	if (right_len == 0)
 	{
 		temp = NULL;
@@ -56,7 +54,7 @@ static char	*split(char **line)
 	else
 	{
 		temp = *line;
-		*line = ft_substr(*line, left_len, right_len);
+		*line = ft_substr_mod(*line, left_len, right_len);
 		free(temp);
 	}
 	return (left);
@@ -99,7 +97,7 @@ char	*get_next_line(int fd)
 	if (!buff)
 		return (NULL);
 	n_read = 1;
-	while (n_read > 0 && !(ft_strchr(line[fd], '\n')))
+	while (n_read > 0 && !(ft_strchr_mod(line[fd], '\n')))
 	{
 		n_read = read(fd, buff, BUFFER_SIZE);
 		if (n_read == -1)
@@ -109,7 +107,7 @@ char	*get_next_line(int fd)
 			return (stop_to_read(&line[fd], &buff, n_read));
 		if (n_read > 0)
 		{
-			line[fd] = ft_strjoin(line[fd], buff);
+			line[fd] = ft_strjoin_mod(line[fd], buff);
 			if (!line[fd])
 				return (free(buff), buff = NULL, NULL);
 		}
