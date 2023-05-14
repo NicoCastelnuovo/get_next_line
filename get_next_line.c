@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:47:26 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/05/12 17:25:19 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/05/14 14:42:15 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char	*split(char **line)
 	int		right_len;
 
 	left_len = get_left_len(*line);
-	left = ft_substr(*line, 0, left_len);
+	left = ft_substr_mod(*line, 0, left_len);
 	right_len = get_right_len(*line, left_len);
 	if (right_len == 0)
 	{
@@ -56,7 +56,7 @@ static char	*split(char **line)
 	else
 	{
 		temp = *line;
-		*line = ft_substr(*line, left_len, right_len);
+		*line = ft_substr_mod(*line, left_len, right_len);
 		free(temp);
 	}
 	return (left);
@@ -76,7 +76,8 @@ char	*init_buffer(char **buff, int fd)
 	}
 	return (NULL);
 }
-static char	*stop_to_read(char **line, char **buff, int	n_read)
+
+static char	*stop_to_read(char **line, char **buff, int n_read)
 {
 	if (*line)
 	{
@@ -98,7 +99,7 @@ char	*get_next_line(int fd)
 	if (!buff)
 		return (NULL);
 	n_read = 1;
-	while (n_read > 0 && !(ft_strchr(line, '\n')))
+	while (n_read > 0 && !(ft_strchr_mod(line, '\n')))
 	{
 		n_read = read(fd, buff, BUFFER_SIZE);
 		if (n_read == -1)
@@ -108,7 +109,7 @@ char	*get_next_line(int fd)
 			return (stop_to_read(&line, &buff, n_read));
 		if (n_read > 0)
 		{
-			line = ft_strjoin(line, buff);
+			line = ft_strjoin_mod(line, buff);
 			if (!line)
 				return (free(buff), buff = NULL, NULL);
 		}
