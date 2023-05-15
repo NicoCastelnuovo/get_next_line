@@ -6,16 +6,15 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:48:02 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/05/14 13:51:43 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/05/15 09:06:49 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# include <unistd.h> // read
-# include <stdio.h> // print_f ---- REMOVE
-# include <stdlib.h> // malloc
+# include <unistd.h>
+# include <stdlib.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 10

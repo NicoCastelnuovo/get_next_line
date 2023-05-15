@@ -6,27 +6,27 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:47:26 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/05/14 17:51:37 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/05/15 10:11:15 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static int	get_substr_len(char *line, int start)
+static int	get_substr_len(char *s, int start)
 {
 	int	i;
 
 	i = 0;
 	if (!start)
 	{
-		while (line[i] && line[i] != '\n')
-		i++;
-		if (line[i] == '\n')
+		while (s[i] && s[i] != '\n')
+			i++;
+		if (s[i] == '\n')
 			i++;
 	}
 	else
 	{
-		while (line[start])
+		while (s[start])
 		{
 			start++;
 			i++;
@@ -35,26 +35,26 @@ static int	get_substr_len(char *line, int start)
 	return (i);
 }
 
-static char	*split(char **line)
+static char	*split(char **store)
 {
 	char	*left;
 	char	*temp;
 	int		left_len;
 	int		right_len;
 
-	left_len = get_substr_len(*line, 0);
-	left = ft_substr_mod(*line, 0, left_len);
-	right_len = get_substr_len(*line, left_len);
+	temp = NULL;
+	left_len = get_substr_len(*store, 0);
+	left = ft_substr_mod(*store, 0, left_len);
+	right_len = get_substr_len(*store, left_len);
 	if (right_len == 0)
 	{
-		temp = NULL;
-		free(*line);
-		*line = NULL;
+		free(*store);
+		*store = NULL;
 	}
 	else
 	{
-		temp = *line;
-		*line = ft_substr_mod(*line, left_len, right_len);
+		temp = *store;
+		*store = ft_substr_mod(*store, left_len, right_len);
 		free(temp);
 	}
 	return (left);
@@ -96,8 +96,8 @@ char	*get_next_line(int fd)
 	buff = init_buffer(&buff, fd);
 	if (!buff)
 		return (NULL);
-	n_read = 1;
-	while (n_read > 0 && !(ft_strchr_mod(line, '\n')))
+	n_read = 0;
+	while (!(ft_strchr_mod(line, '\n')))
 	{
 		n_read = read(fd, buff, BUFFER_SIZE);
 		if (n_read == -1)

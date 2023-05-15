@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:48:51 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/05/14 17:51:30 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/05/15 10:11:04 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*ft_strchr_mod(char *str, int c)
 	return (NULL);
 }
 
-void	*ft_memcpy(void *dest, void *src, size_t n)
+void	*ft_memcpy_mod(void *dest, void *src, size_t n)
 {
 	size_t	i;
 
@@ -89,8 +89,8 @@ char	*ft_strjoin_mod(char *line, char *buff)
 	new_line = malloc ((line_len + buff_len + 1) * sizeof(char));
 	if (!new_line)
 		return (NULL);
-	ft_memcpy(new_line, line, line_len);
-	ft_memcpy(new_line + line_len, buff, buff_len);
+	ft_memcpy_mod(new_line, line, line_len);
+	ft_memcpy_mod(new_line + line_len, buff, buff_len);
 	new_line[line_len + buff_len] = '\0';
 	free(line);
 	return (new_line);
