@@ -6,7 +6,7 @@
 /*   By: ncasteln <ncasteln@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 13:47:26 by ncasteln          #+#    #+#             */
-/*   Updated: 2023/05/15 09:53:36 by ncasteln         ###   ########.fr       */
+/*   Updated: 2023/05/15 12:03:18 by ncasteln         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,21 +75,21 @@ static char	*init_buffer(char **buff, int fd)
 	return (NULL);
 }
 
-static char	*stop_to_read(char **line, char **buff, int n_read)
+static char	*stop_to_read(char **line, char *buff, int n_read)
 {
 	if (*line)
 	{
 		if (n_read == -1)
-			return (free(*buff), free(*line), *line = NULL, NULL);
+			return (free(buff), free(*line), *line = NULL, NULL);
 		if (n_read == 0)
-			return (free(*buff), split(line));
+			return (free(buff), split(line));
 	}
-	return (free(*buff), NULL);
+	return (free(buff), NULL);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*line[MAX_FD];
+	static char	*line[FOPEN_MAX];
 	char		*buff;
 	int			n_read;
 
@@ -101,10 +101,10 @@ char	*get_next_line(int fd)
 	{
 		n_read = read(fd, buff, BUFFER_SIZE);
 		if (n_read == -1)
-			return (stop_to_read(&line[fd], &buff, n_read));
+			return (stop_to_read(&line[fd], buff, n_read));
 		buff[n_read] = '\0';
 		if (n_read == 0)
-			return (stop_to_read(&line[fd], &buff, n_read));
+			return (stop_to_read(&line[fd], buff, n_read));
 		if (n_read > 0)
 		{
 			line[fd] = ft_strjoin_mod(line[fd], buff);
