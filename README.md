@@ -6,22 +6,22 @@ get_next_line is a project developed for 42 Heilbroon School.
 C programming - read() - file descriptor - buffer - static variable
 
 ## Subject
-In this project I had to create a function which `read()` from a file everytime is called, line by line. For more info about the requirements, take a look at the [subject](en.subject.pdf) contained in this repo.
+In this project I had to create a function which `read()` from a text file everytime is called, line by line. For more info about the requirements, take a look at the [subject](en.subject.pdf) contained in this repo.
 
 ## Brief explanation
 The project covers the following topics:
 
 ### 1. Static variable
+As suggested by the subject, the use of a static variable `static char *line` is a way to remember the line returned every time the function is called. Their use involve static memory allocation, which extends their lifetime through the entire run of the program.
 
-### 2. Collecting data
+### 2. Buffer
+To properly use `read()` it is necessary to understand this basic concept. In general, a buffer is a temporary storage area, where the data is hold to be moved, processed or transferred (think about the data transferred in a video streaming service).
 
-### 3. Use of the graphical library
-
-### 4. Leaks free
+### 3. Leaks free
 Like in any other project of 42, the memory allocated by `malloc()` has to be properly sfreed. No leaks are tolerated. In this project I checked the leaks using [valgrind](https://valgrind.org/) and `system("leaks <program-name>")`
 
 ## Bonus
-In the bonus part of the project the goal is use `get_next_line` function to read more than one file descriptor simultaneously, keeping trace of the next line of each file.
+In the bonus part of the project the goal is implement a version of `get_next_line` which can manage multiple file descriptors at the same time remembering the current line of each file, so that everytime the function is called, returns the correct next line of each one.
 
 ---
 
@@ -39,12 +39,10 @@ make
 ```
 #include "get_next_line.h"
 ```
-4. Compile your executable:
+4. Compile your executable. you can add the optional argument `-D BUFFER_SIZE=n` to change the size of the buffer which `read()` uses to read from the file:
 ```
-cc <your_main.c> ./<gnl_path>/libgnl.a -I ./<gnl_path>/get_next_line.h -o <program_name>
+cc <your_main.c> ./<gnl_path>/libgnl.a -I ./<gnl_path>/get_next_line.h -o <program_name> [-D BUFFER_SIZE=n]
 ```
 > **Note:** if you need to `open()` the file and `read()`, remember to `# include <fcntl.h>` header inside your project!
 
 5. Enjoy!
-
-> **Note:** get_next_line is part of `mylib`, a personal collection of libraries and functions used in the 42 Heilbronn projects. [Check it out!](https://github.com/NicoCastelnuovo/mylib)
